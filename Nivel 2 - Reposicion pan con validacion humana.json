@@ -1,0 +1,147 @@
+{
+  "name": "Nivel 2 - Reposicion pan con validacion humana",
+  "nodes": [
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "SELECT DATE_FORMAT(f.Fecha, '%Y-%m-%d') AS fecha, f.Pan_comprado AS pan_comprado, f.Stock_pan AS stock_pan, DATE_FORMAT(CURDATE(), '%Y-%m-%d') AS fecha_hoy FROM Flujo_Pan AS f WHERE f.Fecha BETWEEN DATE_SUB(CURDATE(), INTERVAL 14 DAY) AND CURDATE() AND EXISTS (SELECT 1 FROM Flujo_Pan WHERE Fecha = CURDATE()) ORDER BY f.Fecha ASC;",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.mySql",
+      "typeVersion": 2.4,
+      "position": [
+        656,
+        -256
+      ],
+      "id": "ec3fcccc-82d2-49d8-b8b6-60b5f1b75592",
+      "name": "Buscar registro de pan del dia"
+    },
+    {
+      "parameters": {
+        "jsCode": "const filas = $input.all().map(item => item.json).filter(r => /^\\d{4}-\\d{2}-\\d{2}$/.test(String(r.fecha ?? '')));\nif (!filas.length) return [];\nconst hoy = String(filas[0].fecha_hoy ?? '');\nconst actuales = filas.filter(r => String(r.fecha) === hoy);\nif (!actuales.length) return [];\nconst estado = $getWorkflowStaticData('global');\nif (estado.ultimaFechaAvisada === hoy) return [];\nconst historial = filas.map(r => ({\n  fecha: String(r.fecha),\n  comprado: Number(r.pan_comprado),\n  stock: Number(r.stock_pan)\n})).filter(r => Number.isFinite(r.comprado) && r.comprado >= 0 && Number.isFinite(r.stock) && r.stock >= 0).sort((a, b) => a.fecha.localeCompare(b.fecha));\nconst actual = historial.find(r => r.fecha === hoy);\nif (!actual) return [];\nconst dia = s => Date.parse(`${s}T00:00:00Z`) / 86400000;\nconst consumos = [];\nfor (let i = 1; i < historial.length; i++) {\n  const anterior = historial[i - 1];\n  const siguiente = historial[i];\n  if (dia(siguiente.fecha) - dia(anterior.fecha) !== 1) continue;\n  if (dia(hoy) - dia(siguiente.fecha) > 6) continue;\n  const consumoAparente = anterior.stock + siguiente.comprado - siguiente.stock;\n  if (Number.isFinite(consumoAparente) && consumoAparente >= 0) consumos.push(consumoAparente);\n}\nconst recientes = consumos.slice(-7);\nconst suficiente = recientes.length >= 3;\nconst promedio = suficiente ? recientes.reduce((a, b) => a + b, 0) / recientes.length : null;\nconst margen = 0.10;\nconst sugerencia = suficiente ? Math.max(0, Math.ceil(((promedio * (1 + margen)) - actual.stock) * 2) / 2) : null;\nconst kg = n => n.toFixed(2).replace('.', ',');\nlet mensaje;\nif (suficiente) {\n  mensaje = [\n    'SIG La Maestra - Reposicion de pan',\n    `Datos ingresados en MySQL el ${hoy}.`,\n    `Pan comprado hoy: ${kg(actual.comprado)} kg.`,\n    `Stock informado hoy: ${kg(actual.stock)} kg.`,\n    `Consumo aparente promedio: ${kg(promedio)} kg/dia.`,\n    `Intervalos diarios validos: ${recientes.length}.`,\n    'Margen de seguridad: 10%.',\n    `Compra sugerida para la proxima jornada: ${kg(sugerencia)} kg.`,\n    '',\n    'El consumo aparente puede incluir merma y no equivale a ventas exactas.',\n    'El encargado debe revisar la cifra y aprobar, ajustar o rechazar la compra.',\n    'Este flujo NO realiza pedidos automaticos.'\n  ].join('\\n');\n} else {\n  mensaje = [\n    'SIG La Maestra - Reposicion de pan',\n    `Datos de pan registrados en MySQL el ${hoy}.`,\n    `Pan comprado: ${kg(actual.comprado)} kg.`,\n    `Stock informado: ${kg(actual.stock)} kg.`,\n    '',\n    'No hay historial diario consecutivo suficiente para calcular una sugerencia.',\n    `Intervalos validos disponibles: ${recientes.length}; minimo requerido: 3.`,\n    'El encargado debe determinar manualmente la compra y seguir registrando datos.',\n    'Este flujo NO realiza pedidos automaticos.'\n  ].join('\\n');\n}\nreturn [{ json: { fecha: hoy, sugerencia_kg: sugerencia, mensaje } }];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        896,
+        -256
+      ],
+      "id": "5f233a81-3e38-4862-9402-4ace4f820e7f",
+      "name": "Calcular sugerencia para Telegram"
+    },
+    {
+      "parameters": {
+        "chatId": "REEMPLAZAR_CHAT_ID",
+        "text": "={{ $json.mensaje }}",
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        1136,
+        -256
+      ],
+      "id": "0978d9ea-8bf2-4b05-a341-c3bc6b673e7c",
+      "name": "Enviar sugerencia por Telegram",
+      "webhookId": "15d1935d-0f7e-4df8-8114-89511a1eb7fd"
+    },
+    {
+      "parameters": {
+        "jsCode": "const resultado = $('Calcular sugerencia para Telegram').first().json;\nconst estado = $getWorkflowStaticData('global');\nestado.ultimaFechaAvisada = resultado.fecha;\nreturn [{ json: { fecha: resultado.fecha, mensaje_enviado: true } }];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1376,
+        -256
+      ],
+      "id": "df5b3242-d880-46fd-afcc-c3e6a8f2234e",
+      "name": "Marcar fecha notificada"
+    },
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "triggerAtHour": 18
+            },
+            {
+              "triggerAtHour": 8
+            },
+            {
+              "triggerAtHour": 22
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        416,
+        -256
+      ],
+      "id": "7c8fb4c5-d610-493d-b9c1-afade8adad6f",
+      "name": "Revisar MySQL"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Buscar registro de pan del dia": {
+      "main": [
+        [
+          {
+            "node": "Calcular sugerencia para Telegram",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Calcular sugerencia para Telegram": {
+      "main": [
+        [
+          {
+            "node": "Enviar sugerencia por Telegram",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Enviar sugerencia por Telegram": {
+      "main": [
+        [
+          {
+            "node": "Marcar fecha notificada",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Revisar MySQL": {
+      "main": [
+        [
+          {
+            "node": "Buscar registro de pan del dia",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "versionId": "e4fd017a-f613-46c3-a739-eeb659c6c48f",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "e5085daccceca6f494c22e55776d647668b442d4559985b6deb05e2923793639"
+  },
+  "nodeGroups": [],
+  "id": "cExlrVWXL5cQUHMm",
+  "tags": []
+}

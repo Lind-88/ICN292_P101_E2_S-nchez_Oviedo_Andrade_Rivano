@@ -1,0 +1,118 @@
+{
+  "name": "Nivel 1 - Recordatorios diarios SIG Almacen",
+  "nodes": [
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "SELECT DATE_FORMAT(CURRENT_DATE(), '%Y-%m-%d') AS fecha, (SELECT COUNT(*) FROM Ventas_Diarias WHERE Fecha = CURRENT_DATE()) AS cierres, (SELECT COUNT(*) FROM Compras_Proveedores WHERE Fecha = CURRENT_DATE()) AS facturas, (SELECT COUNT(*) FROM Gasto_operacional WHERE Fecha = CURRENT_DATE()) AS gastos, (SELECT COUNT(*) FROM Flujo_Pan WHERE Fecha = CURRENT_DATE()) AS control_pan;",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.mySql",
+      "typeVersion": 2.4,
+      "position": [
+        464,
+        -80
+      ],
+      "id": "602cbf83-bca0-4482-8d4a-306595adba7a",
+      "name": "Leer estado de registros ER"
+    },
+    {
+      "parameters": {
+        "jsCode": "const r = $input.first().json;\nconst fecha = String(r.fecha ?? 'hoy');\nconst ventas = Number(r.cierres ?? 0);\nconst facturas = Number(r.facturas ?? 0);\nconst gastos = Number(r.gastos ?? 0);\nconst pan = Number(r.control_pan ?? 0);\nconst mensaje = [\n  `SIG La Maestra - Control del ${fecha}`,\n  '',\n  ventas > 0 ? 'Ventas diarias: registradas.' : 'Ventas diarias: falta ingresar el cierre.',\n  pan > 0 ? 'Control de pan: registrado.' : 'Control de pan: sin registro para hoy.',\n  `Facturas registradas hoy: ${facturas}.`,\n  `Gastos operacionales registrados hoy: ${gastos}.`,\n  '',\n  'Comprueba si hubo facturas o gastos pendientes de ingresar.',\n  'Que no existan facturas o gastos hoy no implica que falte un registro.'\n].join('\\n');\nreturn [{ json: { fecha, mensaje } }];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        704,
+        -80
+      ],
+      "id": "9e492ec5-3273-448e-9cae-692d854245b2",
+      "name": "Preparar recordatorio"
+    },
+    {
+      "parameters": {
+        "chatId": "REEMPLAZAR_CHAT_ID",
+        "text": "={{ $json.mensaje }}",
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        944,
+        -80
+      ],
+      "id": "2e48ed40-97f2-4860-92dc-0e3ecd7cda32",
+      "name": "Enviar resumen por Telegram",
+      "webhookId": "a2e0b91b-aab0-48e4-a8d3-0f407a07aa5a"
+    },
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "triggerAtHour": 22,
+              "triggerAtMinute": 20
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        224,
+        -80
+      ],
+      "id": "b54fc178-c999-4df2-97e5-f2e13cbb9883",
+      "name": "Cada dia a las 22:20"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Leer estado de registros ER": {
+      "main": [
+        [
+          {
+            "node": "Preparar recordatorio",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Preparar recordatorio": {
+      "main": [
+        [
+          {
+            "node": "Enviar resumen por Telegram",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Cada dia a las 22:20": {
+      "main": [
+        [
+          {
+            "node": "Leer estado de registros ER",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "versionId": "7276070f-ee86-4952-ac75-f35b7a1c67df",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "e5085daccceca6f494c22e55776d647668b442d4559985b6deb05e2923793639"
+  },
+  "nodeGroups": [],
+  "id": "DrpMfBdRR5pbhizn",
+  "tags": []
+}
