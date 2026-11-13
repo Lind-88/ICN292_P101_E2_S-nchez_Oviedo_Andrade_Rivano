@@ -4,7 +4,7 @@ Los dos flujos programados consultan MySQL y entregan avisos al encargado del al
 
 ## Configuración de la demostración
 
-1. Crea la base `ER` y carga los datos de demostración siguiendo el [README](../README.md).
+1. Crea la base `ER` y carga los datos de demostración siguiendo el [README](README.md).
 2. Importa en n8n los JSON de nivel 1 y nivel 2. Ambos están exportados inactivos.
 3. Configura una credencial MySQL con acceso de lectura a `ER` desde la instancia de n8n y asígnala a los dos nodos MySQL. Configura la credencial del bot de Telegram y reemplaza `REEMPLAZAR_CHAT_ID` en los nodos de envío por el chat de prueba. Mantén las credenciales en n8n.
 4. Configura la zona horaria de los flujos en `America/Santiago` y comprueba que la sesión de MySQL use la misma fecha local. Los nodos SQL usan `CURRENT_DATE()` o `CURDATE()` para seleccionar registros.
