@@ -67,4 +67,4 @@ Los catálogos permiten registrar proveedores y categorías antes de que exista 
 
 Las claves primarias impiden duplicados. Las claves foráneas exigen proveedor y categoría válidos para las compras y los gastos. La interfaz desarrollada [SIG_La_Maestra](SIG_La_Maestra.py) exige campos completos, montos y cantidades no negativos y los límites de decimales del diccionario. El esquema admite `NULL` en las columnas numéricas de importes y cantidades y delega esas comprobaciones de captura a la aplicación.
 
-La interfaz ALGO, fue diseñada para ingresar los datos de manera mas sencilla por parte de usuarios que no manejen SQL.
+La interfaz [SIG_La_Maestra](SIG_La_Maestra.py), fue diseñada para ingresar los datos de manera mas sencilla por parte de usuarios que no manejen SQL.
