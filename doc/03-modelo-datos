@@ -65,6 +65,6 @@ De las tablas, un proveedor puede tener cero o muchas compras. Cada compra refer
 
 Los catálogos permiten registrar proveedores y categorías antes de que exista un movimiento, corregir un nombre en un solo registro y conservar la referencia aunque el catálogo tenga períodos sin movimientos. La separación de importes por medio de pago y el cálculo del total evitan discrepancias entre un total almacenado y sus componentes.
 
-Las claves primarias impiden duplicados. Las claves foráneas exigen proveedor y categoría válidos para las compras y los gastos. La interfaz desarrollada (algo) exige campos completos, montos y cantidades no negativos y los límites de decimales del diccionario. El esquema admite `NULL` en las columnas numéricas de importes y cantidades y delega esas comprobaciones de captura a la aplicación.
+Las claves primarias impiden duplicados. Las claves foráneas exigen proveedor y categoría válidos para las compras y los gastos. La interfaz desarrollada [SIG_La_Maestra](SIG_La_Maestra.py) exige campos completos, montos y cantidades no negativos y los límites de decimales del diccionario. El esquema admite `NULL` en las columnas numéricas de importes y cantidades y delega esas comprobaciones de captura a la aplicación.
 
 La interfaz ALGO, fue diseñada para ingresar los datos de manera mas sencilla por parte de usuarios que no manejen SQL.
