@@ -33,9 +33,9 @@ La aplicación permite:
 
 Además, se consideran dos automatizaciones:
 
-** [Nivel 1 Recordatorios:](automatizaciones/Nivel1-Recordatorios_diarios_SIG_Almacen.json) ** consulta diariamente los registros existentes en MySQL y envía un resumen por Telegram, permitiendo identificar cierres o controles pendientes.
+**[Nivel 1 Recordatorios:](automatizaciones/Nivel1-Recordatorios_diarios_SIG_Almacen.json)** consulta diariamente los registros existentes en MySQL y envía un resumen por Telegram, permitiendo identificar cierres o controles pendientes.
 
-** [Nivel 2 Reposición de pan:](automatizaciones/Nivel2-Reposicion_pan_con_validacion_humana.json) ** consulta el historial almacenado en `Flujo_Pan`, estima el consumo aparente y calcula una cantidad sugerida de compra. El resultado se informa por Telegram para que el administrador tome la decisión final.
+**[Nivel 2 Reposición de pan:](automatizaciones/Nivel2-Reposicion_pan_con_validacion_humana.json)** consulta el historial almacenado en `Flujo_Pan`, estima el consumo aparente y calcula una cantidad sugerida de compra. El resultado se informa por Telegram para que el administrador tome la decisión final.
 
 ## 4. Tecnologías utilizadas
 
