@@ -109,18 +109,18 @@ También se puede instalar desde un archivo [requirements.txt](requirements.txt)
 1. Iniciar MySQL Server.
 2. Abrir MySQL Workbench.
 3. Conectarse al servidor local.
-4. Abrir el archivo [schema.sql](db/schema.sql).
+4. Abrir el archivo [schema.sql](bd/schema.sql).
 5. Ejecutar el script para crear la base de datos `ER` y sus tablas.
 
-**Importante:** ejecutar [schema.sql](db/schema.sql) sobre un entorno limpio. Si la base `ER` ya existe, comprobar primero su estructura para evitar errores por tablas duplicadas. No eliminar una base con datos reales.
+**Importante:** ejecutar [schema.sql](bd/schema.sql) sobre un entorno limpio. Si la base `ER` ya existe, comprobar primero su estructura para evitar errores por tablas duplicadas. No eliminar una base con datos reales.
 
 ### Paso 5. Cargar datos de prueba
 
-1. Abrir [seed.sql](db/seed.sql) en MySQL Workbench.
+1. Abrir [seed.sql](bd/seed.sql) en MySQL Workbench.
 2. Ejecutar las instrucciones de inserción.
 3. Comprobar que los registros se hayan cargado correctamente.
 
-Los datos del archivo [seed.sql](db/seed.sql) son sintéticos y se utilizan exclusivamente para pruebas académicas.
+Los datos del archivo [seed.sql](bd/seed.sql) son sintéticos y se utilizan exclusivamente para pruebas académicas.
 
 ### Paso 6. Comprobar las tablas
 
@@ -143,7 +143,7 @@ Deberán aparecer las seis tablas correspondientes al modelo ER.
 
 ### Paso 7. Ejecutar las consultas de negocio
 
-1. Abrir el archivo [queries.sql](db/queries.sql).
+1. Abrir el archivo [queries.sql](bd/queries.sql).
 2. Ejecutar las consultas en MySQL Workbench.
 3. Revisar los resultados.
 
