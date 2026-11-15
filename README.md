@@ -33,9 +33,9 @@ La aplicación permite:
 
 Además, se consideran dos automatizaciones:
 
-**Nivel 1 Recordatorios:** consulta diariamente los registros existentes en MySQL y envía un resumen por Telegram, permitiendo identificar cierres o controles pendientes.
+**(Nivel 1 Recordatorios:)[ICN292_P101_E2_S-nchez_Oviedo_Andrade_Rivano/automatizaciones/Nivel 1 - Recordatorios diarios SIG Almacen.json]** consulta diariamente los registros existentes en MySQL y envía un resumen por Telegram, permitiendo identificar cierres o controles pendientes.
 
-**Nivel 2 Reposición de pan:** consulta el historial almacenado en `Flujo_Pan`, estima el consumo aparente y calcula una cantidad sugerida de compra. El resultado se informa por Telegram para que el administrador tome la decisión final.
+**(Nivel 2 Reposición de pan:)[ICN292_P101_E2_S-nchez_Oviedo_Andrade_Rivano/automatizaciones/Nivel 2 - Reposicion pan con validacion humana.json]** consulta el historial almacenado en `Flujo_Pan`, estima el consumo aparente y calcula una cantidad sugerida de compra. El resultado se informa por Telegram para que el administrador tome la decisión final.
 
 ## 4. Tecnologías utilizadas
 
@@ -64,7 +64,7 @@ Para ejecutar la solución se necesitan:
 
 ### 5.1 Librerías de Python
 
-La aplicación `SIG_La_Maestra.py` utiliza las siguientes bibliotecas:
+La aplicación (SIG_La_Maestra.py)[SIG_La_Maestra.py] utiliza las siguientes bibliotecas:
 
 | Biblioteca             | Uso                                | Instalación adicional |
 | ---------------------- | ---------------------------------- | --------------------- |
@@ -100,7 +100,7 @@ En CMD, ejecutar:
 
 `py -m pip install mysql-connector-python`
 
-También se puede instalar desde un archivo `requirements.txt`:
+También se puede instalar desde un archivo (requirements.txt)[requirements.txt]:
 
 `py -m pip install -r requirements.txt`
 
@@ -109,18 +109,18 @@ También se puede instalar desde un archivo `requirements.txt`:
 1. Iniciar MySQL Server.
 2. Abrir MySQL Workbench.
 3. Conectarse al servidor local.
-4. Abrir el archivo `db/schema.sql`.
+4. Abrir el archivo (schema.sql)[db/schema.sql].
 5. Ejecutar el script para crear la base de datos `ER` y sus tablas.
 
-**Importante:** ejecutar `schema.sql` sobre un entorno limpio. Si la base `ER` ya existe, comprobar primero su estructura para evitar errores por tablas duplicadas. No eliminar una base con datos reales.
+**Importante:** ejecutar (schema.sql)[db/schema.sql] sobre un entorno limpio. Si la base `ER` ya existe, comprobar primero su estructura para evitar errores por tablas duplicadas. No eliminar una base con datos reales.
 
 ### Paso 5. Cargar datos de prueba
 
-1. Abrir `db/seed.sql` en MySQL Workbench.
+1. Abrir (seed.sql)[db/seed.sql] en MySQL Workbench.
 2. Ejecutar las instrucciones de inserción.
 3. Comprobar que los registros se hayan cargado correctamente.
 
-Los datos del archivo `seed.sql` son sintéticos y se utilizan exclusivamente para pruebas académicas.
+Los datos del archivo (seed.sql)[db/seed.sql] son sintéticos y se utilizan exclusivamente para pruebas académicas.
 
 ### Paso 6. Comprobar las tablas
 
@@ -143,7 +143,7 @@ Deberán aparecer las seis tablas correspondientes al modelo ER.
 
 ### Paso 7. Ejecutar las consultas de negocio
 
-1. Abrir el archivo `db/queries.sql`.
+1. Abrir el archivo (queries.sql)[db/queries.sql].
 2. Ejecutar las consultas en MySQL Workbench.
 3. Revisar los resultados.
 
@@ -157,7 +157,7 @@ Las consultas permiten analizar:
 
 ### Paso 8. Ejecutar la aplicación Python
 
-Abrir mediante doble clic en `Abrir_SIG_La_Maestra.bat`, este abrirá `py SIG_La_Maestra.py`.
+Abrir mediante doble clic en (Abrir_SIG_La_Maestra.bat)[Abrir_SIG_La_Maestra.bat], este abrirá (py SIG_La_Maestra.py)[py SIG_La_Maestra.py].
 
 El programa solicitará la contraseña del usuario MySQL configurado.
 
