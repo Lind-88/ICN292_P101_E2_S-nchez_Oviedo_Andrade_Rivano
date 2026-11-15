@@ -33,9 +33,9 @@ La aplicación permite:
 
 Además, se consideran dos automatizaciones:
 
-**[Nivel 1 Recordatorios:](ICN292_P101_E2_S-nchez_Oviedo_Andrade_Rivano/automatizaciones/Nivel 1 - Recordatorios diarios SIG Almacen.json)** consulta diariamente los registros existentes en MySQL y envía un resumen por Telegram, permitiendo identificar cierres o controles pendientes.
+** [Nivel 1 Recordatorios:](automatizaciones/Nivel1-Recordatorios_diarios_SIG_Almacen.json) ** consulta diariamente los registros existentes en MySQL y envía un resumen por Telegram, permitiendo identificar cierres o controles pendientes.
 
-**[Nivel 2 Reposición de pan:](ICN292_P101_E2_S-nchez_Oviedo_Andrade_Rivano/automatizaciones/Nivel 2 - Reposicion pan con validacion humana.json)** consulta el historial almacenado en `Flujo_Pan`, estima el consumo aparente y calcula una cantidad sugerida de compra. El resultado se informa por Telegram para que el administrador tome la decisión final.
+** [Nivel 2 Reposición de pan:](automatizaciones/Nivel2-Reposicion_pan_con_validacion_humana.json) ** consulta el historial almacenado en `Flujo_Pan`, estima el consumo aparente y calcula una cantidad sugerida de compra. El resultado se informa por Telegram para que el administrador tome la decisión final.
 
 ## 4. Tecnologías utilizadas
 
@@ -157,7 +157,7 @@ Las consultas permiten analizar:
 
 ### Paso 8. Ejecutar la aplicación Python
 
-Abrir mediante doble clic en [Abrir_SIG_La_Maestra.bat](Abrir_SIG_La_Maestra.bat), este abrirá [py SIG_La_Maestra.py](py SIG_La_Maestra.py).
+Abrir mediante doble clic en [Abrir_SIG_La_Maestra.bat](Abrir_SIG_La_Maestra.bat), este abrirá [SIG_La_Maestra.py](SIG_La_Maestra.py).
 
 El programa solicitará la contraseña del usuario MySQL configurado.
 
