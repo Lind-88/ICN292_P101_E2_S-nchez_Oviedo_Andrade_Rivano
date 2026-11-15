@@ -66,7 +66,7 @@
               "triggerAtHour": 18
             },
             {
-              "triggerAtHour": 8
+              "triggerAtHour": 20
             },
             {
               "triggerAtHour": 22
@@ -136,7 +136,7 @@
     "executionOrder": "v1",
     "binaryMode": "separate"
   },
-  "versionId": "e4fd017a-f613-46c3-a739-eeb659c6c48f",
+  "versionId": "2c0f74c2-b95d-47e9-a18e-e27baf45f00c",
   "meta": {
     "templateCredsSetupCompleted": true,
     "instanceId": "e5085daccceca6f494c22e55776d647668b442d4559985b6deb05e2923793639"
