@@ -4,7 +4,7 @@ El modelo E2 conecta el registro diario del almacén con el control de informaci
 
 ## Diagrama y archivos
 
-En Bizagi Modeler, abre [BPMN.bpm](assest/BPMN.bpm).
+En Bizagi Modeler, abre [BPMN.bpm](assets/BPMN.bpm).
 
 ## Participantes y traspasos
 
