@@ -64,7 +64,7 @@ Para ejecutar la solución se necesitan:
 
 ### 5.1 Librerías de Python
 
-La aplicación [SIG_La_Maestra.py](SIG_La_Maestra.py) utiliza las siguientes bibliotecas:
+La aplicación [SIG_La_Maestra.py](interfaz/SIG_La_Maestra.py) utiliza las siguientes bibliotecas:
 
 | Biblioteca             | Uso                                | Instalación adicional |
 | ---------------------- | ---------------------------------- | --------------------- |
@@ -157,7 +157,7 @@ Las consultas permiten analizar:
 
 ### Paso 8. Ejecutar la aplicación Python
 
-Abrir mediante doble clic en [Abrir_SIG_La_Maestra.bat](Abrir_SIG_La_Maestra.bat), este abrirá [SIG_La_Maestra.py](SIG_La_Maestra.py).
+Abrir mediante doble clic en [Abrir_SIG_La_Maestra.bat](interfaz/Abrir_SIG_La_Maestra.bat), este abrirá [SIG_La_Maestra.py](interfaz/SIG_La_Maestra.py).
 
 El programa solicitará la contraseña del usuario MySQL configurado.
 
