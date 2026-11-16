@@ -5,5 +5,6 @@ El equipo utilizó herramientas de inteligencia artificial como apoyo puntual en
 - Consulta sobre la sintaxis y el uso de JavaScript en los nodos de código de n8n.
 - Consulta de ejemplos básicos de la biblioteca Tkinter de Python para resolver dudas sobre el desarrollo de la interfaz.
 - Revisión de explicaciones y ejemplos de dos comandos SQL complementarios a los contenidos abordados en clases. El equipo utilizó esos ejemplos para comprender su funcionamiento y aplicar los comandos por cuenta propia.
+- Consulta limitada a ejemplos de sintaxis Markdown para crear tablas, dar formato al texto y enlazar archivos del repositorio mediante rutas relativas.
 
 Las decisiones de diseño y la implementación del prototipo estuvieron a cargo del equipo.
